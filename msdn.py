@@ -6,16 +6,16 @@
 # @toolbar 
 
 
-DEFAULT_BROWSER='firefox'
+#DEFAULT_BROWSER='firefox'
 
-GOOGLE_SEARCH_PREFIX = "https://www.google.com/search?btnI&q="
-DUCKDUCKGO_SEARCH_PREFIX = "https://duckduckgo.com/?q=!ducky "
-SEARCH_PREFIX = GOOGLE_SEARCH_PREFIX
+#GOOGLE_SEARCH_PREFIX = "https://www.google.com/search?btnI&q="
+#DUCKDUCKGO_SEARCH_PREFIX = "https://duckduckgo.com/?q=!ducky "
+#SEARCH_PREFIX = GOOGLE_SEARCH_PREFIX
 
-from subprocess import Popen
+#from subprocess import Popen
 from ghidra.program.model.symbol import FlowType
 import httplib, urllib2
-
+import webbrowser
 
 
 
@@ -122,9 +122,8 @@ if search == None:
 
 if search:
 	#search = SEARCH_PREFIX + search
-	#print "Opening: " + search
         search = getOnlineMsdnContent(search)
-
-	Popen([DEFAULT_BROWSER, search])
+        webbrowser.open(search)
+	#Popen([DEFAULT_BROWSER, search])
 else:
 	print "FAILED: Nothing found to search."
