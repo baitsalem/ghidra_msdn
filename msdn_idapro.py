@@ -3,11 +3,8 @@ from idautils import *
 from subprocess import Popen
 import httplib, urllib2,webbrowser
 
-#DEFAULT_BROWSER='firefox'
+import ida_kernwin
 
-#GOOGLE_SEARCH_PREFIX = "https://www.google.com/search?btnI&q="
-#DUCKDUCKGO_SEARCH_PREFIX = "https://duckduckgo.com/?q=!ducky "
-#SEARCH_PREFIX = GOOGLE_SEARCH_PREFIX
 
 
 def _getFirstMsdnLink(feed_content):
@@ -85,18 +82,35 @@ def getOnlineMsdnContent(keyword):
             return "<p>Even MSDN can't help you on this one.</p>"
 
 
-search = None
+def hotkey_pressed():
+    search = None
 
-for xref in XrefsFrom(here(), 0):
+    for xref in XrefsFrom(here(), 0):
 
-    if xref.type == fl_CN or xref.type == fl_CF:
-        search = Name(xref.to)
+        if xref.type == fl_CN or xref.type == fl_CF:
+            search = Name(xref.to)
 
-if search:
-	#search = SEARCH_PREFIX + search
-	#print "Opening: " + search
-        search = getOnlineMsdnContent(search)
-        webbrowser.open(search)
-        #Popen([DEFAULT_BROWSER, search])
-else:
-	print "FAILED: Nothing found to search."
+    if search:
+            search = getOnlineMsdnContent(search)
+            webbrowser.open(search)
+    else:
+    	    print "FAILED: Nothing found to search."
+
+
+
+try:
+    hotkey_ctx
+    if ida_kernwin.del_hotkey(hotkey_ctx):
+        print("Hotkey unregistered!")
+        del hotkey_ctx
+    else:
+        print("Failed to delete hotkey!")
+except:
+    hotkey_ctx = ida_kernwin.add_hotkey("Shift-H", hotkey_pressed)
+    if hotkey_ctx is None:
+        print("Failed to register hotkey!")
+        del hotkey_ctx
+    else:
+        print("Hotkey registered!")
+
+
