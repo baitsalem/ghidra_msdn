@@ -1,18 +1,41 @@
-#TODO write a description for this script
+#######################################################################
+# Copyright (c) 2020
+# Boussad AIT SALEM <boussad.aitsalem<at>gmail<dot>com>
+# All rights reserved.
+########################################################################
+#
+#  This file is part of msdn plugin of GHIDRA
+#
+#  MSDN_GHIDRA is free software: you can redistribute it and/or modify it
+#  under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful, but
+#  WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#  General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see
+#  <http://www.gnu.org/licenses/>.
+#
+########################################################################
+
 # @author B. AIT SALEM 
 # @category _NEW_
-# @keybinding 
-# @menupath 
+# @keybinding Shift-H 
+# @menupath Tools.MSDN.view_documentation
 # @toolbar 
 
 
-#DEFAULT_BROWSER='firefox'
+DEFAULT_BROWSER='firefox'
 
 #GOOGLE_SEARCH_PREFIX = "https://www.google.com/search?btnI&q="
 #DUCKDUCKGO_SEARCH_PREFIX = "https://duckduckgo.com/?q=!ducky "
 #SEARCH_PREFIX = GOOGLE_SEARCH_PREFIX
 
-#from subprocess import Popen
+from subprocess import Popen
 from ghidra.program.model.symbol import FlowType
 import httplib, urllib2
 import webbrowser
@@ -123,7 +146,7 @@ if search == None:
 if search:
 	#search = SEARCH_PREFIX + search
         search = getOnlineMsdnContent(search)
-        webbrowser.open(search)
-	#Popen([DEFAULT_BROWSER, search])
+        #webbrowser.open(search)
+	Popen([DEFAULT_BROWSER, search])
 else:
 	print "FAILED: Nothing found to search."
