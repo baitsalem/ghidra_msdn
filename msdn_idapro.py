@@ -112,7 +112,7 @@ def hotkey_pressed():
     for xref in XrefsFrom(here(), 0):
 
         if xref.type == fl_CN or xref.type == fl_CF:
-            search = Name(xref.to)
+            search = get_name(xref.to)
 
     if search:
             search = getOnlineMsdnContent(search)
